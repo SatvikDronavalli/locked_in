@@ -39,5 +39,3 @@ for i in range(0, len(gait_params)):
         gait_params.drop(i,inplace=True)
 # Dropping irrelevant columns
 gait_params.drop(columns=["Left_Limp_Index", "Right_Limp_Index", "Left_Foot_Off", "Right_Foot_Off", "Gait Duration after data crop"],inplace=True)
-print(gait_params)
-# Everything is now synced with the test branch
