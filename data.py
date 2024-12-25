@@ -37,7 +37,6 @@ for i in range(0, len(gait_params)):
 for i in range(0, len(gait_params)):
     if gait_params.loc[i,"at risk of falls"] not in range(0,2):
         gait_params.drop(i,inplace=True)
-# Drppping irrelevant columns
+# Dropping irrelevant columns
 gait_params.drop(columns=["Left_Limp_Index", "Right_Limp_Index", "Left_Foot_Off", "Right_Foot_Off", "Gait Duration after data crop"],inplace=True)
 print(gait_params)
-
