@@ -1,4 +1,4 @@
-from Force_Data import GRF_right_train, GRF_left_train, GRF_right_test, GRF_left_test
+from Force_Data import gait_x_train, gait_y_train, gait_x_test, gait_y_test
 from IMU_Data import X_train, X_test, y_train, y_test
 import numpy as np
 import pandas as pd
