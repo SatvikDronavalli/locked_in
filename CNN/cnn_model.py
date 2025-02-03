@@ -1,4 +1,4 @@
-from Force_Data import gait_x_train, gait_y_train, gait_x_test, gait_y_test
+from force_data import gait_x_train, gait_y_train, gait_x_test, gait_y_test
 from IMU_Data import X_train, X_test, y_train, y_test
 import pandas as pd
 from tensorflow.keras.models import Sequential
