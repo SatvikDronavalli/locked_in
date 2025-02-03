@@ -1,5 +1,5 @@
 from tensorflow.keras.models import load_model
-from Force_Data import gait_x_test, gait_y_test
+from force_data import gait_x_test, gait_y_test
 # Load the best model after training
 best_model = load_model('best_fall_risk_model.keras')
 
