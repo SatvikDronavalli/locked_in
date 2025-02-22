@@ -44,6 +44,7 @@ for i in range(0, len(gait_params)):
 # Dropping irrelevant columns and balancing dataset with SMOTE
 gait_params.drop(columns=["Left_Limp_Index", "Right_Limp_Index", "Left_Foot_Off", "Right_Foot_Off", "Gait Duration after data crop"],inplace=True)
 X = gait_params.drop(columns=["at risk of falls", "Name"]) # Independent Variable
+params = X.columns.to_numpy()
 y = gait_params["at risk of falls"].astype(int) # Dependent Variable
 smote = SMOTE(sampling_strategy={1:100},random_state=42)
 X_resampled, y_resampled = smote.fit_resample(X,y)
