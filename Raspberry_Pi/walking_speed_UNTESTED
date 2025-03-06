@@ -1,0 +1,62 @@
+import time
+import board
+import busio
+import numpy as np
+from adafruit_lsm6ds import ism330dhcx as ism
+import bmp581
+
+# Initialize I2C and sensors
+i2c = busio.I2C(board.SCL, board.SDA)
+accel_sensor = ism.ISM330DHCX(i2c, 0x6B)
+force_sensor = bmp581.BMP581(i2c, 0x47)
+
+velocity = 0
+prev_time = time.time()
+strike_detected = False
+
+# Thresholds to filter noise and avoid unnecessary integration
+THRESHOLD_FORCE = 5  # Adjust based on real testing
+THRESHOLD_ACCEL = 0.1  # Ignore acceleration below this value
+TIME_STEP = 0.05  # Sampling time step
+ZERO_VELOCITY_THRESHOLD = 0.05  # If velocity is very small, set to zero to avoid drift
+
+def integrate_acceleration(acceleration, time_interval):
+    """Numerically integrates acceleration to estimate velocity."""
+    return acceleration * time_interval
+
+while True:
+    current_time = time.time()
+    time_interval = current_time - prev_time
+    prev_time = current_time
+
+    # Read accelerometer data
+    accel_x, accel_y, accel_z = accel_sensor.acceleration
+    accel_x = round(accel_x, 2)
+    accel_y = round(accel_y, 2)
+    accel_z = round(accel_z, 2)
+
+    # Read force sensor data
+    force = force_sensor.pressure
+
+    # Detect foot strike
+    if force > THRESHOLD_FORCE and not strike_detected:
+        strike_detected = True
+        start_time = current_time
+
+    # Detect foot off (end of stride)
+    elif force < THRESHOLD_FORCE and strike_detected:
+        strike_detected = False
+        stride_time = current_time - start_time
+        print(f"Stride Time: {stride_time:.2f} seconds")
+        print(f"Velocity: {velocity:.2f} m/s")
+
+    # Integrate acceleration if above noise threshold
+    if abs(accel_x) > THRESHOLD_ACCEL:
+        velocity += integrate_acceleration(accel_x, time_interval)
+
+    # Prevent velocity drift from noise
+    if abs(velocity) < ZERO_VELOCITY_THRESHOLD:
+        velocity = 0
+
+    print(f"Velocity: {velocity:.2f} m/s")
+    time.sleep(TIME_STEP)
