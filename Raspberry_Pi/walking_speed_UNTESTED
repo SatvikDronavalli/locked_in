@@ -13,12 +13,17 @@ force_sensor = bmp581.BMP581(i2c, 0x47)
 velocity = 0
 prev_time = time.time()
 strike_detected = False
+step_count = 0
+cadence = 0
+stride_lengths = []
+step_timestamps = []
 
 # Thresholds to filter noise and avoid unnecessary integration
 THRESHOLD_FORCE = 5  # Adjust based on real testing
 THRESHOLD_ACCEL = 0.1  # Ignore acceleration below this value
 TIME_STEP = 0.05  # Sampling time step
 ZERO_VELOCITY_THRESHOLD = 0.05  # If velocity is very small, set to zero to avoid drift
+CADENCE_WINDOW = 10  # Time window (in seconds) to calculate cadence
 
 def integrate_acceleration(acceleration, time_interval):
     """Numerically integrates acceleration to estimate velocity."""
@@ -38,17 +43,19 @@ while True:
     # Read force sensor data
     force = force_sensor.pressure
 
-    # Detect foot strike
+    # Detect foot strike (step event)
     if force > THRESHOLD_FORCE and not strike_detected:
         strike_detected = True
         start_time = current_time
+        stride_velocity = 0  # Reset integrated velocity for stride length calculation
 
     # Detect foot off (end of stride)
     elif force < THRESHOLD_FORCE and strike_detected:
         strike_detected = False
         stride_time = current_time - start_time
-        print(f"Stride Time: {stride_time:.2f} seconds")
-        print(f"Velocity: {velocity:.2f} m/s")
+        stride_length = stride_velocity * stride_time  # Integrating velocity over stride duration
+        stride_lengths.append(stride_length)
+        print(f"Stride Length: {stride_length:.2f} meters")
 
     # Integrate acceleration if above noise threshold
     if abs(accel_x) > THRESHOLD_ACCEL:
@@ -58,5 +65,15 @@ while True:
     if abs(velocity) < ZERO_VELOCITY_THRESHOLD:
         velocity = 0
 
-    print(f"Velocity: {velocity:.2f} m/s")
+    # Accumulate velocity over stride duration for stride length calculation
+    if strike_detected:
+        stride_velocity += velocity * time_interval
+
+    # Calculate cadence (steps per minute)
+    step_timestamps = [t for t in step_timestamps if current_time - t <= CADENCE_WINDOW]
+    if len(step_timestamps) > 1:
+        cadence = (len(step_timestamps) / CADENCE_WINDOW) * 60  # Convert to steps per minute
+
+    print(f"Velocity: {velocity:.2f} m/s | Cadence: {cadence:.2f} steps/min")
+
     time.sleep(TIME_STEP)
