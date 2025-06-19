@@ -30,7 +30,6 @@ GRF_right_train = GRF_right_train.drop(columns=["TRAIN_BALANCED","TEST","SUBJECT
 GRF_right_test = GRF_right_test.drop(columns=["TRAIN_BALANCED","TEST","SUBJECT_ID","SESSION_ID","TRIAL_ID"])
 GRF_left_train = GRF_left_train.drop(columns=["TRAIN_BALANCED","TEST","SUBJECT_ID","SESSION_ID","TRIAL_ID"])
 GRF_left_test = GRF_left_test.drop(columns=["TRAIN_BALANCED","TEST","SUBJECT_ID","SESSION_ID","TRIAL_ID"])
-GRF_right_train.to_csv('testing.csv')
 gait_x_train = np.stack([GRF_right_train.drop(columns="at risk of falls"),GRF_left_train.drop(columns="at risk of falls")],-1)
 gait_y_train = GRF_right_train["at risk of falls"]
 gait_x_test = np.stack([GRF_right_test.drop(columns="at risk of falls"),GRF_left_test.drop(columns="at risk of falls")],-1)
