@@ -7,8 +7,7 @@ GRF_left_path = Path(__file__).parent / "GRF_F_V_PRO_left.csv"
 metadata_path = Path(__file__).parent / "GRF_metadata.csv"
 GRF_right = pd.read_csv(GRF_right_path)
 GRF_left = pd.read_csv(GRF_left_path)
-metadata = pd.read_csv(metadata_path)
-# average data if necessary instead of dropping duplicates
+metadata = pd.read_csv(metadata_path)# average data if necessary instead of dropping duplicates
 metadata = metadata.drop_duplicates(subset=["SUBJECT_ID"])
 metadata = metadata[metadata["CLASS_LABEL"].isin(["HC","H"])]
 metadata["at risk of falls"] = [None] * len(metadata)
@@ -20,8 +19,6 @@ GRF_left = GRF_left[GRF_left["SUBJECT_ID"].isin(valid_IDs)]
 # Merging 'at risk of falls' information to force data
 GRF_right = GRF_right.merge(metadata[["SUBJECT_ID","TRAIN_BALANCED", "TEST","at risk of falls"]], on="SUBJECT_ID", how="inner")
 GRF_left = GRF_left.merge(metadata[["SUBJECT_ID","TRAIN_BALANCED", "TEST", "at risk of falls"]], on="SUBJECT_ID", how="inner")
-GRF_right.to_csv('right_test.csv')
-GRF_left.to_csv('left_test.csv')
 GRF_right_train = GRF_right[GRF_right["TRAIN_BALANCED"] == 1]
 GRF_right_test = GRF_right[GRF_right["TEST"] == 1]
 GRF_left_train = GRF_left[GRF_left["TRAIN_BALANCED"] == 1]

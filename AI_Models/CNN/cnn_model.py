@@ -1,5 +1,4 @@
 from Force_Data.force_data import gait_x_train, gait_y_train, gait_x_test, gait_y_test
-from IMU_Data import X_train, X_test, y_train, y_test
 import pandas as pd
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Input, Dense, Conv1D, Flatten, Dropout
