@@ -8,7 +8,7 @@ GRF_left_path = Path("Force_Data") / "GRF_F_V_PRO_left.csv"
 metadata_path = Path("Force_Data") / "GRF_metadata.csv"
 GRF_right = pd.read_csv(GRF_right_path)
 GRF_left = pd.read_csv(GRF_left_path)
-metadata = pd.read_csv(metadata_path)# average data if necessary instead of dropping duplicates
+metadata = pd.read_csv(metadata_path) # average data if necessary instead of dropping duplicates
 metadata = metadata.drop_duplicates(subset=["SUBJECT_ID"])
 metadata = metadata[metadata["CLASS_LABEL"].isin(["HC","H"])]
 metadata["at risk of falls"] = [None] * len(metadata)
