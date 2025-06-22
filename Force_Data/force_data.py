@@ -3,9 +3,9 @@ import numpy as np
 from pathlib import Path
 
 #-------------GRF--------------
-GRF_right_path = Path("Force_Data") / "GRF_F_V_PRO_right.csv"
-GRF_left_path = Path("Force_Data") / "GRF_F_V_PRO_left.csv"
-metadata_path = Path("Force_Data") / "GRF_metadata.csv"
+GRF_right_path = Path(__file__).parent / "GRF_F_V_PRO_right.csv"
+GRF_left_path = Path(__file__).parent / "GRF_F_V_PRO_left.csv"
+metadata_path = Path(__file__).parent / "GRF_metadata.csv"
 GRF_right = pd.read_csv(GRF_right_path)
 GRF_left = pd.read_csv(GRF_left_path)
 metadata = pd.read_csv(metadata_path) # average data if necessary instead of dropping duplicates
@@ -33,9 +33,9 @@ gait_y_train = GRF_right_train["at risk of falls"]
 gait_x_test = np.stack([GRF_right_test.drop(columns="at risk of falls"),GRF_left_test.drop(columns="at risk of falls")],-1)
 gait_y_test = GRF_right_test["at risk of falls"]
 #-------------ML-COP--------------
-GF_right_path = Path("Force_Data") / "GRF_COP_ML_PRO_right.csv"
-GRF_left_path = Path("Force_Data") / "GRF_COP_ML_PRO_left.csv"
-metadata_path = Path("Force_Data") / "GRF_metadata.csv"
+GF_right_path = Path(__file__).parent / "GRF_COP_ML_PRO_right.csv"
+GRF_left_path = Path(__file__).parent / "GRF_COP_ML_PRO_left.csv"
+metadata_path = Path(__file__).parent / "GRF_metadata.csv"
 GRF_right = pd.read_csv(GRF_right_path)
 GRF_left = pd.read_csv(GRF_left_path)
 metadata = pd.read_csv(metadata_path)
