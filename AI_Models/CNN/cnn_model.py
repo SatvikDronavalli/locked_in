@@ -1,14 +1,14 @@
-from Force_Data.force_data import gait_x_train, gait_y_train, gait_x_test, gait_y_test
+from Force_Data.force_data import final_x_train,final_y_train
 import pandas as pd
+# GPU path: C:\Users\Satvik\AppData\Local\Temp\CUDA
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Input, Dense, Conv1D, Flatten, Dropout
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 from tensorflow.keras.models import load_model
-
 # Define the model for GRF data
 model = Sequential([
-    Input(shape=(101,2)),
+    Input(shape=(101,6)),
     Conv1D(filters=32, kernel_size=3, activation='relu'),
     Dropout(0.2),
     Flatten(),
@@ -25,9 +25,9 @@ print("hello world")
 
 # Train the model with GRF data and labels
 history = model.fit(
-    gait_x_train, 
-    gait_y_train,  # Use actual labels here
-    epochs=5,
+    final_x_train,
+    final_y_train,  # Use actual labels here
+    epochs=200,
     batch_size=32,
     callbacks=[checkpoint, early_stopping]
 )

@@ -1,5 +1,5 @@
 from tensorflow.keras.models import load_model
-from force_data import gait_x_test, gait_y_test
+from Force_Data.force_data import final_x_test,final_y_test
 import numpy as np
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
@@ -7,9 +7,9 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 best_model = load_model('best_fall_risk_model.keras')
 
 # Evaluate the best model on the testing data
-y_pred_probs = best_model.predict(gait_x_test)  # Get probabilities (output of sigmoid layer)
+y_pred_probs = best_model.predict(final_x_test)  # Get probabilities (output of sigmoid layer)
 y_pred = (y_pred_probs > 0.5).astype(int)  # Convert probabilities to binary (0 or 1) using a threshold of 0.5
-y_true = gait_y_test  # Ground truth labels
+y_true = final_y_test  # Ground truth labels
 
 # Calculate metrics
 accuracy = accuracy_score(y_true, y_pred)

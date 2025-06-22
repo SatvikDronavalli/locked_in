@@ -3,12 +3,12 @@ from tensorflow.keras.layers import Input, Dense, Conv1D, Dropout, LSTM
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 import pandas as pd
-from Force_Data import final_x_train,final_y_train
+from Force_Data.force_data import final_x_train,final_y_train
 from tensorflow.keras.utils import plot_model
 
 # Define the CNN-LSTM model for GRF data
 model = Sequential([
-    Input(shape=(101, 4)),
+    Input(shape=(101, 6)),
     Conv1D(filters=32, kernel_size=3, activation='relu'),
     Dropout(0.2),
     LSTM(64),  # LSTM after CNN
@@ -37,4 +37,4 @@ history = model.fit(
 pd.DataFrame(history.history).to_csv('training_history_cnn_lstm.csv', index=False)
 
 # Visualize model
-plot_model(model, to_file='cnn_lstm_model.png', show_shapes=True, show_layer_names=True)
+#plot_model(model, to_file='cnn_lstm_model.png', show_shapes=True, show_layer_names=True)

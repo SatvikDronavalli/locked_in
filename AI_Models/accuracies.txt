@@ -1,0 +1,48 @@
+SVM with and without SMOTE:
+
+Accuracy: 0.9167
+Precision: 0.8000
+Recall: 0.8000
+F1-score: 0.8000
+
+CNN-LSTM stats (GRF only):
+
+Accuracy: 0.7717
+Precision: 0.9066
+Recall: 0.7453
+F1 Score: 0.8181
+
+CNN-LSTM stats (GRF + ML COP):
+
+Accuracy: 0.7909
+Precision: 0.8705
+Recall: 0.8181
+F1 Score: 0.8435
+
+Regular CNN stats (GRF only):
+
+Accuracy: 0.6729
+Precision: 0.9485
+Recall: 0.5551
+F1 Score: 0.7003
+
+Regular CNN stats (GRF + ML COP):
+
+Accuracy: 0.7869
+Precision: 0.9055
+Recall: 0.7710
+F1 Score: 0.8329
+
+CNN-LSTM stats (GRF + all COP):
+
+Accuracy: 0.7939
+Precision: 0.8545
+Recall: 0.8445
+F1 Score: 0.8495
+
+CNN stats (GRF + all COP):
+
+Accuracy: 0.7663
+Precision: 0.9120
+Recall: 0.7312
+F1 Score: 0.8117
