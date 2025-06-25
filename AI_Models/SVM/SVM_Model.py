@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 # Make predictions
 from sklearn.model_selection import GridSearchCV
-from IMU_Data import X_train, X_test, y_train, y_test, params
+from IMU_Data.IMU_data import X_train, X_test, y_train, y_test, params
 print(len(X_train),len(X_test),len(y_train),len(y_test))
 #sns.pairplot(X_train,hue='at risk of falls')
 scaler = StandardScaler()
