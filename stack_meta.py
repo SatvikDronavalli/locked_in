@@ -13,7 +13,8 @@ cnn_probs = np.load(FUSION / "cnn_probs.npy")
 svm_probs = np.load(FUSION / "svm_probs.npy")
 y_test    = np.load(FUSION / "y_test.npy")
 
-meta_X = np.column_stack([cnn_probs, svm_probs])
+meta_X = np.column_stack([cnn_probs[:24], svm_probs])
+print(len(y_test))
 meta_clf = LogisticRegression().fit(meta_X, y_test)
 
 meta_probs = meta_clf.predict_proba(meta_X)[:, 1]

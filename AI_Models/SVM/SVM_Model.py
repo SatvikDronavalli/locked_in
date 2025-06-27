@@ -14,7 +14,7 @@ from sklearn.metrics import (
     accuracy_score, precision_score, recall_score, f1_score
 )
 from sklearn.inspection import permutation_importance
-from IMU_Data import X_train, X_test, y_train, y_test, params
+from IMU_Data.IMU_data import X_train, X_test, y_train, y_test, params
 
 # ── Scale features ─────────────────────────────────────────────────
 scaler = StandardScaler()
@@ -39,11 +39,11 @@ print(f"Recall   : {recall_score(y_test, y_pred):.4f}")
 print(f"F1-score : {f1_score(y_test, y_pred):.4f}")
 
 # Permutation importance plot (unchanged, optional)
-perm = permutation_importance(svm_model, X_test_s, y_test)
+'''perm = permutation_importance(svm_model, X_test_s, y_test)
 plt.barh(params[perm.importances_mean.argsort()],
          perm.importances_mean[perm.importances_mean.argsort()])
 plt.xlabel("Permutation Importance")
-plt.show()
+plt.show() '''
 
 # ── Save model & scaler ────────────────────────────────────────────
 joblib.dump(svm_model, "svm_imu.joblib")
